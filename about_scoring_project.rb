@@ -30,8 +30,19 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 # Your goal is to write the score method.
 
 def score(dice)
+  total = 0
+  dice_hash = Hash.new(0)
+  these = dice.each { |die| dice_hash[(die == 1 ? 10 : die)] += 1 }
+  total = dice_hash.inject(0) do |sum, (die, num)|
+    temp = 0
+    num, temp = num - 3, die * 100 if num >= 3
+    temp += (num > 0 and (die == 10 or die == 5)) ? 10 * num * die : 0
+    sum + temp
+  end
+  return total
   # You need to write this method
 end
+
 
 class AboutScoringProject < EdgeCase::Koan
   def test_score_of_an_empty_list_is_zero

@@ -14,7 +14,22 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  #raise TriangleError if a <= 0 or b <= 0 or c <= 0
+  raise TriangleError unless valid?(a,b,c)
+  if a == b and b == c
+    return :equilateral
+  elsif a == b or a == c or b == c
+    return :isosceles
+  else
+    return :scalene
+  end
+end
+
+def valid?(*a)
+  a.sort!
+  max = a.pop
+  return false if a.pop + a.pop <= max
+  true
 end
 
 # Error class used in part 2.  No need to change this code.
